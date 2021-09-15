@@ -36,7 +36,7 @@ class VKcandidat:   # Класс для поиска в ВК подходящи�
                   "age_from": self.user_age,
                   "age_to": self.user_age,
                   "sex": -(self.users_params['response'][0]['sex']) + 3,
-                  "status": self.users_params['response'][0]['relation'],
+                  "status": 6,
                   "city": self.users_params['response'][0]['city']['id']
                   }
         requests_test = requests.get(self.url + "users.search", params).json()  # Получение от ВК json-ответа
@@ -55,7 +55,7 @@ class VKcandidat:   # Класс для поиска в ВК подходящи�
         else:
             dict_foto = {}      # В этот словарь добавляются ссылки на фото
             for i in requests_test['response']['items']:
-                    dict_foto[i["likes"]["count"]] = i['sizes'][-1]['url']
+                dict_foto[i["likes"]["count"]] = i['id']
             sor = sorted(list(dict_foto.keys()))
             if len(sor) >= 3:
                 return [dict_foto[sor[-1]], dict_foto[sor[-2]], dict_foto[sor[-3]]]
@@ -81,4 +81,3 @@ class VKcandidat:   # Класс для поиска в ВК подходящи�
         candidate = users[randrange(len(users))]
         candidate.append(self.upload_foto(candidate[1]))
         return candidate
-

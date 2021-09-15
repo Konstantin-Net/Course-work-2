@@ -1,4 +1,4 @@
-""" Для работы модуля необходимо создать в PostgreSQL базу данных с параметрами указанными в 7-ой строке,
+""" Для работы модуля необходимо создать в PostgreSQL базу данных с параметрами указанными в 8-ой строке,
 а также запустить данный файл для создания нужных таблиц.
 
 """
@@ -44,10 +44,10 @@ class DatabaseVKinder:  # Класс для добавления данных н
         connection.execute(f"INSERT INTO Сandidate(VK_id, Name, Reference, BotUserId) "
                            f"VALUES({vk_id}, '{name}', '{reference}', {botuser_id});")
 
-    def add_photo(self, list_photo, candidateId):   # Функция добавляет в базу ссылки на фото найденого кандидата
+    def add_photo(self, list_photo, candidateId):   # Функция добавляет в базу идентификатор медиавложения найденого кандидата
         for i in list_photo:
             connection.execute(f"INSERT INTO Photo(ReferencePhoto, СandidateId) "
-                               f"VALUES('{i}', {candidateId});")
+                               f"VALUES('{str(i)}', {candidateId});")
 
     def database_move(self, ids, lst):  # Функция принимает данные для записи и запускает внутренние функции класса
         quantity = connection.execute(f"SELECT * FROM Сandidate WHERE VK_id = {lst[1]};").fetchall()
